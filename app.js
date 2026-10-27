@@ -30,7 +30,7 @@
 
   (window.KAKOMON || []).forEach(set => {
     const name = set.year + "年度 第" + set.round + "回 大問" + KANJI_NUM[set.daimon];
-    const passage = set.passage ? { title: set.passageTitle, passage: set.passage, notes: set.notes } : null;
+    const passage = set.passage ? { title: set.passageTitle, author: set.passageAuthor, passage: set.passage, notes: set.notes } : null;
     const items = set.questions.map(q => {
       q.id = q.id || set.id + "-" + q.n;
       const item = { q, passage, source: "過去問 " + name + " " + q.n };
