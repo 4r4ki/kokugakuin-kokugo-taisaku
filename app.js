@@ -131,7 +131,7 @@
     if (!kakoSets.length) {
       ck.appendChild(el('<p class="muted">過去問データがありません。<code>data/kakomon/kakomon.js</code> を置くと表示されます。</p>'));
     } else {
-      ck.appendChild(el('<p class="notice">解答は問題集の解答ページを見ずに作ったものです。まちがいに気づいたら解答ページを優先してください。</p>'));
+      ck.appendChild(el('<p class="notice">解答は問題集の解答ページで確認ずみです。解説はこのアプリ用に書いたものです。</p>'));
       const ulk = el('<ul class="list"></ul>');
       kakoSets.slice().sort((a, b) => (b.set.year - a.set.year) || (a.set.round - b.set.round) || (a.set.daimon - b.set.daimon))
         .forEach(({ set, name, items }) => {
