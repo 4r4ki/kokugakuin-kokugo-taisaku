@@ -1,0 +1,6 @@
+# 過去問の本文・写真は著作物のため、リポジトリに入れない（自宅でのみ使用）
+photos/
+data/kakomon/*
+!data/kakomon/README.md
+.DS_Store
+Thumbs.db
