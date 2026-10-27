@@ -129,7 +129,7 @@
 
     const ck = el('<section class="card"><h2>過去問</h2></section>');
     if (!kakoSets.length) {
-      ck.appendChild(el('<p class="muted">過去問データがありません。<code>data/kakomon/kakomon.js</code> を置くと表示されます。</p>'));
+      ck.appendChild(el('<p class="muted">過去問は著作物のため、このページには入っていません。パソコンの <code>index.html</code> から開いたときだけ使えます。</p>'));
     } else {
       ck.appendChild(el('<p class="notice">解答は問題集の解答ページで確認ずみです。解説はこのアプリ用に書いたものです。</p>'));
       const ulk = el('<ul class="list"></ul>');
