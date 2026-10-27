@@ -90,6 +90,17 @@
       '<div class="bar"><span style="width:' + r.pct + '%"></span></div></span>';
   }
 
+  // 画面上部の「問題を解く／知識を学ぶ」切りかえ
+  function tabs(active) {
+    const bar = el('<nav class="tabs"><button type="button">問題を解く</button><button type="button">知識を学ぶ</button></nav>');
+    const [b1, b2] = bar.querySelectorAll("button");
+    b1.classList.toggle("on", active === "quiz");
+    b2.classList.toggle("on", active === "learn");
+    b1.onclick = home;
+    b2.onclick = learnHome;
+    return bar;
+  }
+
   // ── ホーム画面 ─────────────────────────────
   function home() {
     const stats = loadStats();
@@ -98,6 +109,7 @@
     const wrongIds = Object.keys(stats).filter(id => stats[id].last === false && all[id]);
 
     app.innerHTML = "";
+    app.appendChild(tabs("quiz"));
 
     const c1 = el('<section class="card"><h2>大問1　知識問題</h2>' +
       '<p class="muted">漢字・部首・熟語・慣用句・敬語・文法など。本番は12問です。</p></section>');
@@ -175,6 +187,112 @@
     return picked;
   }
 
+  // ── 知識を学ぶ ─────────────────────────────
+  const LEARN = window.LEARN || [];
+
+  function cardsOf(t) {
+    const cards = [];
+    t.sections.forEach(s => { if (s.card !== false) s.items.forEach(([f, b]) => cards.push({ f, b, h: s.h })); });
+    return cards;
+  }
+
+  // テーマに関係する問題（大問1は本文なし、大問3は本文ありの問題から選ぶ）
+  function itemsOf(t) {
+    return Object.values(all).filter(it => t.cats.includes(it.q.cat) && (t.group === 3) === !!it.passage);
+  }
+
+  function learnHome() {
+    app.innerHTML = "";
+    app.appendChild(tabs("learn"));
+    [[1, "大問1　知識問題"], [3, "大問3　詩・短歌・俳句"]].forEach(([g, h]) => {
+      const c = el('<section class="card"><h2>' + h + '</h2></section>');
+      const ul = el('<ul class="list"></ul>');
+      LEARN.filter(t => t.group === g).forEach(t => {
+        const li = el('<li><div><button class="btn sub" type="button">' + esc(t.title) + '</button></div>' +
+          '<span class="rate">' + (cardsOf(t).length ? "カード " + cardsOf(t).length + "枚・" : "") + "問題 " + itemsOf(t).length + "問</span></li>");
+        li.querySelector("button").onclick = () => topicPage(t);
+        ul.appendChild(li);
+      });
+      c.appendChild(ul);
+      app.appendChild(c);
+    });
+    window.scrollTo(0, 0);
+  }
+
+  function topicPage(t) {
+    app.innerHTML = "";
+    app.appendChild(tabs("learn"));
+    const c = el('<section class="card learn"><h2>' + esc(t.title) + '</h2><p>' + esc(t.intro) + "</p></section>");
+    const actions = el('<div class="actions"></div>');
+    const cards = cardsOf(t);
+    const items = itemsOf(t);
+    if (cards.length) {
+      const cb = el('<button class="btn" type="button">暗記カード（' + cards.length + "枚）</button>");
+      cb.onclick = () => flashcards(t, shuffle(cards));
+      actions.appendChild(cb);
+    }
+    if (items.length) {
+      const qb = el('<button class="btn sub" type="button">このテーマの問題を解く</button>');
+      qb.onclick = () => start(t.title + "の練習", shuffle(items).slice(0, 15));
+      actions.appendChild(qb);
+    }
+    c.appendChild(actions);
+
+    t.sections.forEach(s => {
+      c.appendChild(el("<h3>" + esc(s.h) + "</h3>"));
+      c.appendChild(el('<dl class="terms">' + s.items.map(([a, b]) => "<dt>" + esc(a) + "</dt><dd>" + esc(b) + "</dd>").join("") + "</dl>"));
+    });
+
+    const back = el('<button class="btn sub" type="button">テーマの一覧へ</button>');
+    back.onclick = learnHome;
+    c.appendChild(back);
+    app.appendChild(c);
+    window.scrollTo(0, 0);
+  }
+
+  // 暗記カード：表を見て思い出し、めくって確かめる
+  function flashcards(t, deck) {
+    let i = 0;
+    const again = [];
+    function show() {
+      app.innerHTML = "";
+      app.appendChild(tabs("learn"));
+      const c = el('<section class="card"></section>');
+      if (i >= deck.length) {
+        c.appendChild(el("<h2>" + esc(t.title) + "　暗記カード</h2>"));
+        c.appendChild(el('<p>' + deck.length + "枚中 " + (deck.length - again.length) + "枚を覚えました。</p>"));
+        if (again.length) {
+          const r = el('<button class="btn" type="button">覚えていない ' + again.length + "枚をもう一度</button>");
+          r.onclick = () => flashcards(t, shuffle(again));
+          c.appendChild(r);
+        }
+        const b = el('<button class="btn sub" type="button">「' + esc(t.title) + "」にもどる</button>");
+        b.onclick = () => topicPage(t);
+        c.appendChild(b);
+        app.appendChild(c);
+        return;
+      }
+      const card = deck[i];
+      c.appendChild(el('<div class="qhead"><span class="tag">' + esc(card.h) + '</span><span class="progress">' + (i + 1) + " / " + deck.length + "</span></div>"));
+      const fc = el('<div class="flash"><div class="front">' + esc(card.f) + '</div><div class="back" hidden>' + esc(card.b) + "</div></div>");
+      c.appendChild(fc);
+      const flip = el('<button class="btn" type="button">答えを見る</button>');
+      const ok = el('<button class="btn" type="button" hidden>覚えた</button>');
+      const ng = el('<button class="btn sub" type="button" hidden>まだ</button>');
+      const reveal = () => { fc.querySelector(".back").hidden = false; flip.hidden = true; ok.hidden = false; ng.hidden = false; };
+      flip.onclick = reveal;
+      fc.onclick = reveal;
+      ok.onclick = () => { i++; show(); };
+      ng.onclick = () => { again.push(card); i++; show(); };
+      const quit = el('<button class="btn sub" type="button">やめる</button>');
+      quit.onclick = () => topicPage(t);
+      [flip, ok, ng, quit].forEach(b => c.appendChild(b));
+      app.appendChild(c);
+      window.scrollTo(0, 0);
+    }
+    show();
+  }
+
   // ── 問題を解く ─────────────────────────────
   let session = null;
 
@@ -227,7 +345,12 @@
   function passageBox(p) {
     const box = el('<div class="passage"></div>');
     if (p.title) box.appendChild(el('<div class="ptitle">' + esc(p.title) + (p.author ? '　<span class="muted">' + esc(p.author) + "</span>" : "") + "</div>"));
-    box.appendChild(el('<div class="vert">' + esc(p.passage) + "</div>"));
+    const v = el('<div class="vert">' + esc(p.passage) + "</div>");
+    const hint = el('<div class="hint" hidden>← 本文は横にスクロールできます（続きは左）</div>');
+    box.appendChild(v);
+    box.appendChild(hint);
+    // 画面に表示されてから、本文が枠に入りきっているかを調べる
+    requestAnimationFrame(() => { hint.hidden = v.scrollWidth <= v.clientWidth + 2; });
     if (p.notes) box.appendChild(el('<div class="notes">' + p.notes.map(esc).join("<br>") + "</div>"));
     return box;
   }

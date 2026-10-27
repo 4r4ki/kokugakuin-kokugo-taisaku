@@ -32,7 +32,9 @@
 }
 
 * { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body {
+  overflow-wrap: anywhere;
   margin: 0;
   background: var(--bg);
   color: var(--text);
@@ -102,6 +104,8 @@ h3 { font-size: 17px; margin: 16px 0 8px; }
 u { text-decoration-thickness: 2px; text-underline-offset: 4px; }
 
 .passage {
+  min-width: 0;
+  overflow: hidden;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -111,6 +115,8 @@ u { text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .passage .ptitle { font-weight: bold; margin-bottom: 4px; }
 .passage .vert {
   writing-mode: vertical-rl;
+  /* 縦書きの箱は幅を決めないと文章の長さだけ横に広がるので、画面の幅に固定して中でスクロールさせる */
+  width: 100%;
   white-space: pre-wrap;
   max-height: min(70vh, 640px);
   overflow-x: auto;
@@ -159,6 +165,31 @@ u { text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .result-row .m.ok { color: var(--ok); }
 .result-row .m.ng { color: var(--ng); }
 .notice { background: var(--accent-soft); border-radius: 8px; padding: 8px 12px; font-size: 14px; margin: 8px 0; }
+
+/* 切りかえタブ */
+.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 16px; }
+.tabs button {
+  font: inherit; font-size: 16px; padding: 10px 4px; border-radius: 10px; cursor: pointer;
+  border: 2px solid var(--line); background: var(--card); color: var(--text);
+}
+.tabs button.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: bold; }
+
+/* 知識ページ */
+.learn p { margin: 4px 0 8px; }
+.actions { margin: 8px 0 4px; }
+.terms { margin: 0; }
+.terms dt { font-weight: bold; color: var(--accent); margin-top: 10px; }
+.terms dd { margin: 0 0 0 1em; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.hint { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* 暗記カード */
+.flash {
+  border: 2px solid var(--accent); border-radius: 14px; padding: 24px 16px; margin: 12px 0;
+  min-height: 160px; display: flex; flex-direction: column; justify-content: center; text-align: center; cursor: pointer;
+  background: var(--card);
+}
+.flash .front { font-size: 22px; font-weight: bold; }
+.flash .back { margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--line); font-size: 17px; }
 
 @media (max-width: 480px) {
   body { font-size: 16px; }

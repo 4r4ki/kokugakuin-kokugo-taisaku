@@ -10,19 +10,23 @@
   <link rel="apple-touch-icon" href="icon-180.png">
   <link rel="icon" href="icon-180.png">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+  <!-- ?v= は、スマホに古いファイルが残らないようにするための番号。ファイルを変えたら上げる -->
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
   <header class="site-header">
     <button class="home-link" id="homeBtn" type="button">國學院栃木 国語対策</button>
-    <span class="sub">大問1（知識）・大問3（詩・短歌）</span>
+    <span class="sub">大問1（知識）・大問3（詩・短歌・俳句）</span>
   </header>
   <main id="app"></main>
 
-  <script src="data/original.js"></script>
-  <script src="data/original-d3.js"></script>
+  <script src="data/original.js?v=4"></script>
+  <script src="data/original-more.js?v=4"></script>
+  <script src="data/original-d3.js?v=4"></script>
+  <script src="data/original-d3-more.js?v=4"></script>
+  <script src="data/learn.js?v=4"></script>
   <!-- 過去問データ（Gitに入っていないので、ないときは過去問モードが表示されません） -->
   <script src="data/kakomon/kakomon.js" onerror="window.KAKOMON = null"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
