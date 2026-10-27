@@ -353,8 +353,8 @@ window.ORIGINAL_D1 = [
   { id: "o64", cat: "漢字パズル", type: "parts",
     q: "【例】のように漢字でしりとりをしたとき、□1・□2に入る漢字をそれぞれ答えなさい。",
     items: ["【例】花 ― 見 ― 学 ― 習（花見・見学・学習）", "学 ― □1 ― 食 ― □2 ― 物"],
-    parts: [{ label: "1", type: "text", accept: ["会"] }, { label: "2", type: "text", accept: ["品"] }],
-    explain: "学会・会食・食品・品物となります。" },
+    parts: [{ label: "1", type: "text", accept: ["会"] }, { label: "2", type: "text", accept: ["品", "事", "器"] }],
+    explain: "学会・会食・食品・品物となります。□2は「事」（食事・事物）や「器」（食器・器物）でも正解です。" },
 
   // ── 文章（並べかえ・書きかえ・話し合い） ──
   { id: "o65", cat: "文章", type: "order",

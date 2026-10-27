@@ -343,8 +343,8 @@ window.ORIGINAL_D1 = (window.ORIGINAL_D1 || []).concat([
   { id: "m62", cat: "漢字パズル", type: "parts",
     q: "【例】のように漢字でしりとりをしたとき、□1・□2に入る漢字をそれぞれ答えなさい。",
     items: ["【例】花 ― 見 ― 学 ― 習（花見・見学・学習）", "名 ― □1 ― 物 ― □2 ― 声"],
-    parts: [{ label: "1", type: "text", accept: ["人"] }, { label: "2", type: "text", accept: ["音"] }],
-    explain: "名人・人物・物音・音声となります。" },
+    parts: [{ label: "1", type: "text", accept: ["人", "作", "産", "品", "器", "宝"] }, { label: "2", type: "text", accept: ["音"] }],
+    explain: "名人・人物・物音・音声となります。□1は「作」（名作・作物）、「産」（名産・産物）、「品」（名品・品物）なども正解です。□2は「音」だけです。" },
 
   // ── 文章 ──
   { id: "m63", cat: "文章", type: "order",
