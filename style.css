@@ -126,6 +126,7 @@ u { text-decoration-thickness: 2px; text-underline-offset: 4px; }
   letter-spacing: .05em;
   padding: 4px 0;
 }
+.passage .vert .bo { text-decoration: underline; text-underline-position: right; text-underline-offset: 3px; }
 .passage .notes { font-size: 13px; color: var(--muted); margin-top: 8px; }
 
 .choices { display: grid; gap: 8px; margin: 12px 0; }

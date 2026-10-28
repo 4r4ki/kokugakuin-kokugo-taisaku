@@ -11,6 +11,7 @@
   const all = {};
   const d1 = [];
   const d3Sets = [];
+  const testSets = [];
   const kakoSets = [];
 
   (window.ORIGINAL_D1 || []).forEach(q => {
@@ -26,6 +27,15 @@
       return item;
     });
     d3Sets.push({ p, items });
+  });
+
+  (window.TEST_D3 || []).forEach(p => {
+    const items = p.questions.map(q => {
+      const item = { q, passage: p, source: "本番形式（" + p.title + "）" };
+      all[q.id] = item;
+      return item;
+    });
+    testSets.push({ p, items });
   });
 
   (window.KAKOMON || []).forEach(set => {
@@ -129,6 +139,18 @@
 
     const c3 = el('<section class="card"><h2>大問3　詩・短歌</h2>' +
       '<p class="muted">表現技法（比喩・擬人法・倒置法・体言止め・反復）、句切れ、気持ちの読み取り。</p></section>');
+    c3.appendChild(el("<h3>本番形式テスト</h3>"));
+    c3.appendChild(el('<p class="muted">本番と同じく、作品一つに問一から答えます。第1回は詩、第2回は短歌・俳句が出ます。</p>'));
+    const ult = el('<ul class="list"></ul>');
+    testSets.forEach(({ p, items }) => {
+      const li = el("<li><div><button class=\"btn\" type=\"button\">" + esc(p.label) + "</button>" +
+        ' <span class="muted">' + esc(p.title) + (p.author ? "（" + esc(p.author) + "）" : "") + "・" + items.length + "問</span></div>" +
+        rateHtml(rateOf(items, stats)) + "</li>");
+      li.querySelector("button").onclick = () => start("大問3 " + p.label, items);
+      ult.appendChild(li);
+    });
+    c3.appendChild(ult);
+    c3.appendChild(el("<h3>作品べつに練習</h3>"));
     const ul3 = el('<ul class="list"></ul>');
     d3Sets.forEach(({ p, items }) => {
       const li = el("<li><div><button class=\"btn sub\" type=\"button\">" + esc(p.title) + "</button>" +
@@ -345,7 +367,8 @@
   function passageBox(p) {
     const box = el('<div class="passage"></div>');
     if (p.title) box.appendChild(el('<div class="ptitle">' + esc(p.title) + (p.author ? '　<span class="muted">' + esc(p.author) + "</span>" : "") + "</div>"));
-    const v = el('<div class="vert">' + esc(p.passage) + "</div>");
+    // ［①……］は——線部①として線を引く
+    const v = el('<div class="vert">' + esc(p.passage).replace(/［([①-⑳]?)([^］]+)］/g, '$1<span class="bo">$2</span>') + "</div>");
     const hint = el('<div class="hint" hidden>← 本文は横にスクロールできます（続きは左）</div>');
     box.appendChild(v);
     box.appendChild(hint);
