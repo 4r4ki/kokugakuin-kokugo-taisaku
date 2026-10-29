@@ -484,7 +484,8 @@
   }
 
   function textInput(q, area) {
-    const inp = el('<input class="textin" type="text" autocomplete="off" placeholder="ここに書く">');
+    // autocomplete="off" があると、iPhoneで漢字の変換候補が出なくなるので付けない
+    const inp = el('<input class="textin" type="text" lang="ja" autocorrect="on" placeholder="ここに書く">');
     area.appendChild(inp);
     return {
       check() {
