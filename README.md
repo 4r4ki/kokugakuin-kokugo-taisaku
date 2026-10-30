@@ -48,7 +48,7 @@
 
 ## データの追加
 
-- オリジナル問題：`data/original.js`・`data/original-more.js`（大問1）、`data/original-d3.js`・`data/original-d3-more.js`（大問3）
+- オリジナル問題：`data/original.js`・`data/original-more.js`・`data/original-more2.js`（大問1）、`data/original-d3.js`・`data/original-d3-more.js`（大問3）
 - 大問3の本番形式テスト：`data/test-d3.js`・`data/test-d3-more.js`（本文の `［①……］` は——線部①として線を引いて表示）
 - 知識ページ：`data/learn.js`
 - ファイルを変えたら、`index.html` の `?v=` の番号を上げてください（スマホに古いファイルが残らないようにするため）
