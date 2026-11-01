@@ -12,6 +12,7 @@
   const d1 = [];
   const d3Sets = [];
   const testSets = [];
+  const drillSets = [];
   const kakoSets = [];
 
   (window.ORIGINAL_D1 || []).forEach(q => {
@@ -27,6 +28,16 @@
       return item;
     });
     d3Sets.push({ p, items });
+  });
+
+  // 大問3の知識ドリル（本文なし）。知識ページでは大問3の問題として扱う
+  (window.DRILL_D3 || []).forEach(p => {
+    const items = p.questions.map(q => {
+      const item = { q, drill: true, source: "知識ドリル（" + p.title + "）" };
+      all[q.id] = item;
+      return item;
+    });
+    drillSets.push({ p, items });
   });
 
   (window.TEST_D3 || []).forEach(p => {
@@ -139,6 +150,20 @@
 
     const c3 = el('<section class="card"><h2>大問3　詩・短歌</h2>' +
       '<p class="muted">表現技法（比喩・擬人法・倒置法・体言止め・反復）、句切れ、気持ちの読み取り。</p></section>');
+    c3.appendChild(el("<h3>知識ドリル（覚えれば取れる問題）</h3>"));
+    c3.appendChild(el('<p class="muted">本文を読まずに答えられる問題です。表現技法や季語は、ここで確実に点にしましょう。</p>'));
+    const drillAll = drillSets.flatMap(s => s.items);
+    const drillBtn = el('<button class="btn" type="button">全分野から20問</button>');
+    drillBtn.onclick = () => start("大問3 知識ドリル 20問", shuffle(drillAll).slice(0, 20));
+    c3.appendChild(drillBtn);
+    const uld = el('<ul class="list"></ul>');
+    drillSets.forEach(({ p, items }) => {
+      const li = el("<li><div><button class=\"btn sub\" type=\"button\">" + esc(p.title) + "（" + items.length + "問）</button>" +
+        (p.note ? '<div class="muted">' + esc(p.note) + "</div>" : "") + "</div>" + rateHtml(rateOf(items, stats)) + "</li>");
+      li.querySelector("button").onclick = () => start("大問3 " + p.title, shuffle(items));
+      uld.appendChild(li);
+    });
+    c3.appendChild(uld);
     c3.appendChild(el("<h3>本番形式テスト</h3>"));
     c3.appendChild(el('<p class="muted">本番と同じく、作品一つに問一から答えます。第1回は詩、第2回は短歌・俳句が出ます。</p>'));
     const ult = el('<ul class="list"></ul>');
@@ -218,9 +243,9 @@
     return cards;
   }
 
-  // テーマに関係する問題（大問1は本文なし、大問3は本文ありの問題から選ぶ）
+  // テーマに関係する問題（大問1は本文なし、大問3は本文ありの問題と知識ドリルから選ぶ）
   function itemsOf(t) {
-    return Object.values(all).filter(it => t.cats.includes(it.q.cat) && (t.group === 3) === !!it.passage);
+    return Object.values(all).filter(it => t.cats.includes(it.q.cat) && (t.group === 3) === !!(it.passage || it.drill));
   }
 
   function learnHome() {
