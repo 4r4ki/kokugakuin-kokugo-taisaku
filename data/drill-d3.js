@@ -224,7 +224,7 @@ window.DRILL_D3 = [
   {
     id: "dr-kigo",
     title: "季語と季節",
-    note: "今のカレンダーと季節がずれる季語に注意",
+    note: "季語から季節を答える。まちがえやすい季語・新年の季語も",
     questions: [
       { id: "dy1", cat: "季節", type: "parts",
         q: "次の季語の季節を、それぞれ選びなさい。",
@@ -295,7 +295,164 @@ window.DRILL_D3 = [
       { id: "dy10", cat: "季節", type: "choice",
         q: "「五月雨」の季節として正しいものを一つ選び、記号で答えなさい。",
         choices: ["春", "夏", "秋", "冬"], answer: 1,
-        explain: "五月雨は、昔のこよみの五月（今の六月ごろ）に降る長雨、つまり梅雨の雨なので夏の季語です。「五月」だから春、とまちがえないように。" }
+        explain: "五月雨は、昔のこよみの五月（今の六月ごろ）に降る長雨、つまり梅雨の雨なので夏の季語です。「五月」だから春、とまちがえないように。" },
+      { id: "dy11", cat: "季節", type: "parts",
+        q: "次の季語の季節を、それぞれ選びなさい。",
+        parts: [
+          { label: "朧月", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 0 },
+          { label: "夕焼け", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 1 },
+          { label: "霧", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 },
+          { label: "時雨", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 3 }
+        ],
+        explain: "朧月（ぼんやりかすんだ月）は春、夕焼けは夏、霧は秋、時雨（冬のはじめに降ったりやんだりする雨）は冬です。" },
+      { id: "dy12", cat: "季節", type: "parts",
+        q: "次の季語の季節を、それぞれ選びなさい。",
+        parts: [
+          { label: "ひな祭り", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 0 },
+          { label: "こいのぼり", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 1 },
+          { label: "運動会", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 },
+          { label: "大みそか", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 3 }
+        ],
+        explain: "ひな祭りは春、こいのぼり（端午の節句）は夏、運動会は秋、大みそかは冬です。5月5日のこいのぼりは、季語では夏になります。" },
+      { id: "dy13", cat: "季節", type: "parts",
+        q: "次の季語の季節を、それぞれ選びなさい。",
+        parts: [
+          { label: "すみれ", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 0 },
+          { label: "牡丹", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 1 },
+          { label: "すすき", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 },
+          { label: "水仙", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 3 }
+        ],
+        explain: "すみれは春、牡丹は夏（初夏）、すすきは秋、水仙は冬です。" },
+      { id: "dy14", cat: "季節", type: "parts",
+        q: "次の季語の季節を、それぞれ選びなさい。",
+        parts: [
+          { label: "うぐいす", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 0 },
+          { label: "ほととぎす", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 1 },
+          { label: "鈴虫", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 },
+          { label: "鶴", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 3 }
+        ],
+        explain: "うぐいすは春、ほととぎすは夏、鈴虫は秋、鶴は冬です。" },
+      { id: "dy15", cat: "季節", type: "parts",
+        q: "次の季語の季節を、それぞれ選びなさい。",
+        parts: [
+          { label: "凧", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 0 },
+          { label: "風鈴", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 1 },
+          { label: "案山子", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 },
+          { label: "こたつ", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 3 }
+        ],
+        explain: "凧（たこ）は春、風鈴は夏、案山子（かかし）は秋、こたつは冬です。凧はお正月のイメージがありますが、季語では春です。" },
+      { id: "dy16", cat: "季節", type: "parts",
+        q: "次の季語の季節を、それぞれ選びなさい。",
+        parts: [
+          { label: "霞", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 0 },
+          { label: "虹", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 1 },
+          { label: "稲妻", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 },
+          { label: "霜", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 3 }
+        ],
+        explain: "霞（かすみ）は春、虹は夏、稲妻は秋、霜は冬です。雷は夏ですが、稲妻は秋なので注意。" },
+      { id: "dy17", cat: "季節", type: "parts",
+        q: "次の季語の季節を、それぞれ選びなさい。",
+        parts: [
+          { label: "つくし", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 0 },
+          { label: "竹の子", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 1 },
+          { label: "栗", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 },
+          { label: "みかん", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 3 }
+        ],
+        explain: "つくしは春、竹の子は夏（初夏）、栗は秋、みかんは冬です。" },
+      { id: "dy18", cat: "季節", type: "parts",
+        q: "次の季語の季節を、それぞれ選びなさい。",
+        parts: [
+          { label: "日永", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 0 },
+          { label: "短夜", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 1 },
+          { label: "夜長", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 },
+          { label: "短日", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 3 }
+        ],
+        explain: "昼が長くなる「日永」は春、夜が短い「短夜」は夏、夜が長い「夜長」は秋、昼が短い「短日」は冬です。" },
+      { id: "dy19", cat: "季節", type: "parts",
+        q: "次の季語の季節を、それぞれ選びなさい。",
+        parts: [
+          { label: "おたまじゃくし", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 0 },
+          { label: "かたつむり", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 1 },
+          { label: "雁", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 },
+          { label: "白鳥", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 3 }
+        ],
+        explain: "おたまじゃくしは春、かたつむりは夏、雁（かり）は秋にわたってくる鳥、白鳥は冬です。" },
+      { id: "dy20", cat: "季節", type: "parts",
+        q: "次の季語の季節を、それぞれ選びなさい。",
+        parts: [
+          { label: "卒業", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 0 },
+          { label: "田植え", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 1 },
+          { label: "お盆", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 },
+          { label: "七五三", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 3 }
+        ],
+        explain: "卒業は春、田植えは夏、お盆は秋、七五三（11月）は冬です。" },
+      { id: "dy21", cat: "季節", type: "choice",
+        q: "「麦の秋（麦秋）」の季節として正しいものを一つ選び、記号で答えなさい。",
+        choices: ["春", "夏", "秋", "冬"], answer: 1,
+        explain: "麦がみのって取り入れをする初夏のことなので夏です。「秋」の字があっても秋ではありません。" },
+      { id: "dy22", cat: "季節", type: "choice",
+        q: "「立秋」の季節として正しいものを一つ選び、記号で答えなさい。",
+        choices: ["春", "夏", "秋", "冬"], answer: 2,
+        explain: "立秋は8月のはじめで、まだ暑いころですが、季語では秋のはじまりです。" },
+      { id: "dy23", cat: "季節", type: "choice",
+        q: "「寒椿」の季節として正しいものを一つ選び、記号で答えなさい。",
+        choices: ["春", "夏", "秋", "冬"], answer: 3,
+        explain: "冬にさく椿なので冬の季語です。「椿」だけなら春の季語です。" },
+      { id: "dy24", cat: "季節", type: "choice",
+        q: "俳句で「月」とだけあるとき、季節はどれか。一つ選び、記号で答えなさい。",
+        choices: ["春", "夏", "秋", "冬"], answer: 2,
+        explain: "「月」だけなら秋の季語です。空がすみわたる秋の月がいちばん美しいとされたからです。「朧月」は春です。" },
+      { id: "dy25", cat: "季節", type: "multi",
+        q: "次の中から、春の季語をすべて選び、記号で答えなさい。",
+        choices: ["しゃぼん玉", "ぶらんこ", "海水浴", "風船", "田植え", "菜の花"], answer: [0, 1, 3, 5],
+        explain: "しゃぼん玉・ぶらんこ・風船・菜の花は春。海水浴・田植えは夏です。" },
+      { id: "dy26", cat: "季節", type: "multi",
+        q: "次の中から、夏の季語をすべて選び、記号で答えなさい。",
+        choices: ["こいのぼり", "西瓜", "夕立", "七夕", "ほたる", "田植え"], answer: [0, 2, 4, 5],
+        explain: "こいのぼり・夕立・ほたる・田植えは夏。西瓜（すいか）と七夕は秋です。" },
+      { id: "dy27", cat: "季節", type: "multi",
+        q: "次の中から、季語の分け方で「新年」に入るものをすべて選び、記号で答えなさい。",
+        choices: ["門松", "書き初め", "雑煮", "七五三", "大掃除", "羽根つき"], answer: [0, 1, 2, 5],
+        explain: "お正月に関係する門松・書き初め・雑煮・羽根つきは新年。七五三と大掃除は冬です。" },
+      { id: "dy28", cat: "季節", type: "multi",
+        q: "次の中から、季節が秋の季語をすべて選び、記号で答えなさい。",
+        choices: ["ひぐらし", "蝉", "朝顔", "夕顔", "稲妻", "雷"], answer: [0, 2, 4],
+        explain: "ひぐらし・朝顔・稲妻は秋。蝉・夕顔・雷は夏です。よく似た言葉どうしで季節がちがうので、組にして覚えましょう。" },
+      { id: "dy29", cat: "季節", type: "parts",
+        q: "次の俳句の季語を抜き出し、その季節を選びなさい。", items: ["◆たんぽぽの　わた毛を飛ばす　帰り道"],
+        parts: [
+          { label: "季語", type: "text", accept: ["たんぽぽ"] },
+          { label: "季節", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 0 }
+        ],
+        explain: "季語は「たんぽぽ」で春です。（この句はこのアプリのために作ったものです。）" },
+      { id: "dy30", cat: "季節", type: "parts",
+        q: "次の俳句の季語を抜き出し、その季節を選びなさい。", items: ["◆ひぐらしや　夕日の中を　帰る道"],
+        parts: [
+          { label: "季語", type: "text", accept: ["ひぐらし"] },
+          { label: "季節", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 }
+        ],
+        explain: "季語は「ひぐらし」で秋です。蝉は夏ですが、ひぐらしは秋の季語です。（この句はこのアプリのために作ったものです。）" },
+      { id: "dy31", cat: "季節", type: "parts",
+        q: "次の俳句の季語を抜き出し、その季節を選びなさい。", items: ["◆木枯らしや　ポストの赤が　目にしみる"],
+        parts: [
+          { label: "季語", type: "text", accept: ["木枯らし"] },
+          { label: "季節", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 3 }
+        ],
+        explain: "季語は「木枯らし」で冬です。切れ字「や」のついた言葉が季語になっていることが多いです。（この句はこのアプリのために作ったものです。）" },
+      { id: "dy32", cat: "季節", type: "parts",
+        q: "次の俳句の季語を抜き出し、その季節を選びなさい。", items: ["◆校庭で　みんな見上げる　いわし雲"],
+        parts: [
+          { label: "季語", type: "text", accept: ["いわし雲"] },
+          { label: "季節", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 2 }
+        ],
+        explain: "季語は「いわし雲」で秋です。（この句はこのアプリのために作ったものです。）" },
+      { id: "dy33", cat: "季節", type: "parts",
+        q: "次の俳句の季語を抜き出し、その季節を選びなさい。", items: ["◆風鈴の　音にふりむく　ねこの耳"],
+        parts: [
+          { label: "季語", type: "text", accept: ["風鈴"] },
+          { label: "季節", type: "choice", choices: ["春", "夏", "秋", "冬"], answer: 1 }
+        ],
+        explain: "季語は「風鈴」で夏です。（この句はこのアプリのために作ったものです。）" }
     ]
   }
 ];
