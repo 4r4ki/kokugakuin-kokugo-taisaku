@@ -10,7 +10,7 @@
 - **大問3 詩・短歌**：知識ドリル（表現技法・詩の形式・短歌・俳句のきまり・季語の一問一答）、本番形式テスト（第1回形式の詩4セット・第2回形式の短歌・俳句4セット）と、作品べつの練習
 - **過去問**：`data/kakomon/kakomon.js` があるときだけ表示されます
 - **まちがえた問題の復習**：最後にまちがえた問題だけを解き直せます
-- **知識を学ぶ**：18のテーマ（漢字・部首・敬語・表現技法・季語など）のまとめと暗記カード。テーマごとの練習問題にも進めます
+- **知識を学ぶ**：18のテーマ（漢字・部首・敬語・表現技法・季語など）のまとめと暗記カード（約1000項目。同訓異字・同音異義語、まちがえやすい部首、熟字訓、四字熟語、慣用句、ことわざ、敬語のまちがい、品詞、カタカナ語、文学史など）。テーマごとの練習問題にも進めます
 
 スマホでは https://4r4ki.github.io/kokugakuin-kokugo-taisaku/ から使えます（過去問は入っていません）。
 
@@ -48,10 +48,10 @@
 
 ## データの追加
 
-- オリジナル問題：`data/original.js`・`data/original-more.js`・`data/original-more2.js`（大問1）、`data/original-d3.js`・`data/original-d3-more.js`（大問3）
+- オリジナル問題：`data/original.js`・`data/original-more.js`・`data/original-more2.js`・`data/original-more3.js`（大問1・全294問）、`data/original-d3.js`・`data/original-d3-more.js`（大問3）
 - 大問3の知識ドリル：`data/drill-d3.js`
 - 大問3の本番形式テスト：`data/test-d3.js`・`data/test-d3-more.js`（本文の `［①……］` は——線部①として線を引いて表示）
-- 知識ページ：`data/learn.js`
+- 知識ページ：`data/learn.js`、追加分は `data/learn-more.js`（`add("テーマのid", [見出し…])` で、同じテーマに見出しを足す）
 - ファイルを変えたら、`index.html` の `?v=` の番号を上げてください（スマホに古いファイルが残らないようにするため）
 - 過去問：`data/kakomon/kakomon.js`
 
