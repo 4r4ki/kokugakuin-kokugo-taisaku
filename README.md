@@ -48,8 +48,8 @@
 
 ## データの追加
 
-- オリジナル問題：`data/original.js`・`data/original-more.js`・`data/original-more2.js`・`data/original-more3.js`（大問1・全294問）、`data/original-d3.js`・`data/original-d3-more.js`（大問3）
-- 大問3の知識ドリル：`data/drill-d3.js`
+- オリジナル問題：`data/original.js`・`data/original-more.js`・`data/original-more2.js`・`data/original-more3.js`・`data/original-more4.js`（大問1・全392問）、`data/original-d3.js`・`data/original-d3-more.js`（大問3）
+- 大問3の知識ドリル：`data/drill-d3.js`、追加分は `data/drill-d3-more.js`（全127問）
 - 大問3の本番形式テスト：`data/test-d3.js`・`data/test-d3-more.js`（本文の `［①……］` は——線部①として線を引いて表示）
 - 知識ページ：`data/learn.js`、追加分は `data/learn-more.js`（`add("テーマのid", [見出し…])` で、同じテーマに見出しを足す）
 - ファイルを変えたら、`index.html` の `?v=` の番号を上げてください（スマホに古いファイルが残らないようにするため）
