@@ -13,17 +13,19 @@
   const d3Sets = [];
   const testSets = [];
   const drillSets = [];
+  const dokkaiSets = [];
+  const dokkaiDrills = [];
   const kakoSets = [];
 
   (window.ORIGINAL_D1 || []).forEach(q => {
-    const item = { q, source: "オリジナル" };
+    const item = { q, group: 1, source: "オリジナル" };
     all[q.id] = item;
     d1.push(item);
   });
 
   (window.ORIGINAL_D3 || []).forEach(p => {
     const items = p.questions.map(q => {
-      const item = { q, passage: p, source: "オリジナル（" + p.title + "）" };
+      const item = { q, group: 3, passage: p, source: "オリジナル（" + p.title + "）" };
       all[q.id] = item;
       return item;
     });
@@ -33,7 +35,7 @@
   // 大問3の知識ドリル（本文なし）。知識ページでは大問3の問題として扱う
   (window.DRILL_D3 || []).forEach(p => {
     const items = p.questions.map(q => {
-      const item = { q, drill: true, source: "知識ドリル（" + p.title + "）" };
+      const item = { q, group: 3, drill: true, source: "知識ドリル（" + p.title + "）" };
       all[q.id] = item;
       return item;
     });
@@ -42,11 +44,29 @@
 
   (window.TEST_D3 || []).forEach(p => {
     const items = p.questions.map(q => {
-      const item = { q, passage: p, source: "本番形式（" + p.title + "）" };
+      const item = { q, group: 3, passage: p, source: "本番形式（" + p.title + "）" };
       all[q.id] = item;
       return item;
     });
     testSets.push({ p, items });
+  });
+
+  // 大問2・大問4 長文読解（本文つき）と、接続語・指示語・語句の意味のドリル
+  (window.DOKKAI || []).forEach(p => {
+    const items = p.questions.map(q => {
+      const item = { q, group: 2, passage: p, source: "長文読解（" + p.title + "）" };
+      all[q.id] = item;
+      return item;
+    });
+    dokkaiSets.push({ p, items });
+  });
+  (window.DRILL_DOKKAI || []).forEach(p => {
+    const items = p.questions.map(q => {
+      const item = { q, group: 2, drill: true, source: "読解ドリル（" + p.title + "）" };
+      all[q.id] = item;
+      return item;
+    });
+    dokkaiDrills.push({ p, items });
   });
 
   (window.KAKOMON || []).forEach(set => {
@@ -54,7 +74,7 @@
     const passage = set.passage ? { title: set.passageTitle, author: set.passageAuthor, passage: set.passage, notes: set.notes } : null;
     const items = set.questions.map(q => {
       q.id = q.id || set.id + "-" + q.n;
-      const item = { q, passage, source: "過去問 " + name + " " + q.n };
+      const item = { q, passage, group: set.daimon === 1 ? 1 : set.daimon === 3 ? 3 : 2, source: "過去問 " + name + " " + q.n };
       all[q.id] = item;
       return item;
     });
@@ -185,6 +205,7 @@
     });
     c3.appendChild(ul3);
     app.appendChild(c3);
+    app.appendChild(dokkaiCard(stats));
 
     const ck = el('<section class="card"><h2>過去問</h2></section>');
     if (!kakoSets.length) {
@@ -222,6 +243,36 @@
     window.scrollTo(0, 0);
   }
 
+  // 大問2・大問4（長文読解）のカード
+  function dokkaiCard(stats) {
+    const c = el('<section class="card"><h2>大問2・大問4　長文読解</h2>' +
+      '<p class="muted">本番は長文が2題。主題をつかむ問題を中心に、接続語・文中での語句の意味・指示語などが出ます。</p></section>');
+    c.appendChild(el("<h3>読解ドリル（本文なしで練習）</h3>"));
+    const drillAll = dokkaiDrills.flatMap(s => s.items);
+    const db = el('<button class="btn" type="button">全分野から20問</button>');
+    db.onclick = () => start("読解ドリル 20問", shuffle(drillAll).slice(0, 20));
+    c.appendChild(db);
+    const uld = el('<ul class="list"></ul>');
+    dokkaiDrills.forEach(({ p, items }) => {
+      const li = el("<li><div><button class=\"btn sub\" type=\"button\">" + esc(p.title) + "（" + items.length + "問）</button>" +
+        (p.note ? '<div class="muted">' + esc(p.note) + "</div>" : "") + "</div>" + rateHtml(rateOf(items, stats)) + "</li>");
+      li.querySelector("button").onclick = () => start("読解ドリル " + p.title, shuffle(items));
+      uld.appendChild(li);
+    });
+    c.appendChild(uld);
+    c.appendChild(el("<h3>本番形式（長文）</h3>"));
+    c.appendChild(el('<p class="muted">本文を読んでから、問一から順に答えます。記述問題は答えの例と見比べて、自分で丸をつけます。</p>'));
+    const ul = el('<ul class="list"></ul>');
+    dokkaiSets.forEach(({ p, items }) => {
+      const li = el("<li><div><button class=\"btn\" type=\"button\">" + esc(p.label) + "</button>" +
+        ' <span class="muted">' + esc(p.title) + "・" + items.length + "問</span></div>" + rateHtml(rateOf(items, stats)) + "</li>");
+      li.querySelector("button").onclick = () => start(p.label + "「" + p.title + "」", items);
+      ul.appendChild(li);
+    });
+    c.appendChild(ul);
+    return c;
+  }
+
   // 本番形式：分野がかたよらないように12問選ぶ
   function pickTest() {
     const byCat = {};
@@ -245,13 +296,13 @@
 
   // テーマに関係する問題（大問1は本文なし、大問3は本文ありの問題と知識ドリルから選ぶ）
   function itemsOf(t) {
-    return Object.values(all).filter(it => t.cats.includes(it.q.cat) && (t.group === 3) === !!(it.passage || it.drill));
+    return Object.values(all).filter(it => t.cats.includes(it.q.cat) && it.group === t.group);
   }
 
   function learnHome() {
     app.innerHTML = "";
     app.appendChild(tabs("learn"));
-    [[1, "大問1　知識問題"], [3, "大問3　詩・短歌・俳句"]].forEach(([g, h]) => {
+    [[1, "大問1　知識問題"], [2, "大問2・大問4　長文読解"], [3, "大問3　詩・短歌・俳句"]].forEach(([g, h]) => {
       const c = el('<section class="card"><h2>' + h + '</h2></section>');
       const ul = el('<ul class="list"></ul>');
       LEARN.filter(t => t.group === g).forEach(t => {
